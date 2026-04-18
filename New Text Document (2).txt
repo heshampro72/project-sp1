@@ -1,0 +1,93 @@
+void login(){
+  while (true) 
+  {
+		 cout << " ================================================================" << endl;
+		 cout << "|                            Log in                               |" << endl;
+		 cout << " ================================================================ " << endl;
+		 cout << "[1]- Employee\n[2]- Employer\n[3]- exit " << endl;
+		 cout << "----------------------------------------------------------------" << endl;
+
+		 cout << "Enter your choice: ";
+		 int choice;
+		 cin >> choice;
+		 if (cin.fail()) {
+			 cout << "  **Error: Invalid input!** " << endl;
+			 cin.clear();
+			 cin.ignore(1000, '\n');
+			 continue;
+		 }
+		 string ID, Password;
+		 bool found = false;
+
+		 if (choice == 1)
+		 {
+			 cout << "Enter ID: ";
+			 cin >> ID;
+			 cout << "Enter Password: ";
+			 cin >> Password;
+
+			 for (int i = 0; i < count1; i++)
+			 {
+				 if (ID == employee[i].emp_id && Password == employee[i].emp_pass)
+				 {
+					 cout << " ----------------------------------------------------------------" << endl;
+					 cout << "|               Login successful                                 |" << endl;
+					 cout << " ----------------------------------------------------------------" << endl;
+					 found = true;
+					 cout << " *** welcom " << employee[i].emp_name << " ***\n";
+					 count2 = i;
+					 option();
+					 break;
+				 }
+				 else
+				 {
+					 continue;
+				 }
+			 }
+		 }
+		 else if (choice == 2)
+		 {
+			 cout << "Enter ID: ";
+			 cin >> ID;
+			 cout << "Enter Password: ";
+			 cin >> Password;
+
+			 for (int i = 0; i < 2; i++)
+			 {
+				 if (ID == admin[i].admin_id && Password == admin[i].admin_pass)
+				 {
+					 cout << " ----------------------------------------------------------------" << endl;
+					 cout << "|                Login successful                                |" << endl;
+					 cout << " ----------------------------------------------------------------" << endl;
+					 found = true;
+					 cout << " *** welcom " << admin[i].admin_name << " ***\n";
+					 enter();
+					 break;
+				 }
+				 else
+				 {
+					 continue;
+				 }
+			 }
+		 }
+		 else if (choice == 3)
+		 {
+			 cout << "\n  ***Exiting...\n";
+			 break;
+		 }
+		 else
+		 {
+			 cout << "Wrong choice!\n";
+			 continue;
+		 }
+
+		 if (!found)
+		 {
+			 cout << "ID or Password is wrong\n";
+		 }
+		 else
+		 {
+			 break;
+		}
+	}
+ }

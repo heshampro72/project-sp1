@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <iomanip>
 #include <string>
 #include <limits>
@@ -26,11 +26,7 @@ struct employees
 	double NetSalary;
 	string emp_name;
 	string emp_Position;
-	float performancescore;
-	double overtimehours;
-	double overtimerate;
-	double deduction;
-}employee[count1];
+} employee[count1];
 
 int count2;
 int num;
@@ -73,7 +69,7 @@ void login(){
 					 cout << "|               Login successful                                 |" << endl;
 					 cout << " ----------------------------------------------------------------" << endl;
 					 found = true;
-					 cout << " *** welcome " << employee[i].emp_name << " ***\n";
+					 cout << " *** welcom " << employee[i].emp_name << " ***\n";
 					 count2 = i;
 					 option();
 					 break;
@@ -99,7 +95,7 @@ void login(){
 					 cout << "|                Login successful                                |" << endl;
 					 cout << " ----------------------------------------------------------------" << endl;
 					 found = true;
-					 cout << " *** welcome " << admin[i].admin_name << " ***\n";
+					 cout << " *** welcom " << admin[i].admin_name << " ***\n";
 					 enter();
 					 break;
 				 }
@@ -112,8 +108,7 @@ void login(){
 		 else if (choice == 3)
 		 {
 			 cout << "\n  ***Exiting...\n";
-			 exit(0);
-			
+			 break;
 		 }
 		 else
 		 {
@@ -128,10 +123,9 @@ void login(){
 		 else
 		 {
 			 break;
-		 }
-  }
-
-}
+		}
+	}
+ }
 
  void displayEmployeeInfo() {
 	 cout << "Employee Information : \n";
@@ -260,33 +254,30 @@ void login(){
 		 }
 		 break;
 	 } while (true);
-	 cout << "\n***" << employee[count2].emp_name << "'s account has been successfully updated [ID]***\n\n";
+	 cout << "\n***" << employee[count2].emp_name << "'s account has been successfully update [ID]***\n\n";
  }
  void updatepassword() {
-	
 	 do
 	 {
-		 cout << "  Enter the new password (* 6 characters *) : ";
-
-		 cin >> employee[count2].emp_pass;
-		 regex pattern("^[A-Za-z0-9]{6}$");
+		 cout << "  Enter the new password { 6 digits }: ";
+		 cin.ignore();
+		 getline(cin, employee[count2].emp_pass);
+		 regex pattern("^.{6}$");
 		 if (!regex_match(employee[count2].emp_pass, pattern))
 		 {
-			 cout << "\n\n\  ***Error: Invalid input (* 6 characters letters & numbers only *) !*** \n\n";
-			 cin.clear();
-			 cin.ignore(1000, '\n');
+			 cout << "\n\n\  ***Error: Invalid input!*** \n\n";
 			 continue;
 		 }
 		 break;
 
 	 } while (true);
-	 cout << "\n***" << employee[count2].emp_name << "'s account has been successfully updated [Password]***\n\n";
+	 cout << "\n***" << employee[count2].emp_name << "'s account has been successfully update []***\n\n";
  }
  void updateposition() {
 	 cout << "  Enter the new position : ";
 	 cin.ignore();
 	 getline(cin, employee[count2].emp_Position);
-	 cout << "\n***" << employee[count2].emp_name << "'s account has been successfully updated [position]***\n\n";
+	 cout << "\n***" << employee[count2].emp_name << "'s account has been successfully update***\n\n";
 
  }
  void updatephone() {
@@ -303,7 +294,7 @@ void login(){
 		 }
 		 break;
 	 } while (true);
-	 cout << "\n***" << employee[count2].emp_name << "'s account has been successfully updated [Phone]***\n\n";
+	 cout << "\n***" << employee[count2].emp_name << "'s account has been successfully update***\n\n";
  }
  int supdate() {
 	 do
@@ -343,7 +334,6 @@ void login(){
 			 updatephone();
 			 break;
 		 case 5:
-			 cout << "Exiting update...\n";
 			 return;
 			 break;
 		 }
@@ -354,121 +344,13 @@ void login(){
 	 employee[count2] = {};
 	 cout << "\n*** account has been successfully deleted ***\n\n";
  }
- double calculateovertime() {
-	 return employee[num].overtimehours * employee[num].overtimerate;
- }
- double calculatebonus() {
-	 if (employee[num].performancescore >= 100)
-	 {
-		 return 1000;
-	 }
-	 else if (employee[num].performancescore >= 70)
-	 {
-		 return 500;
-	 }
-	 else
-		 return 0;
- }
- double calculatetaxes() {
-	 return employee[num].BasicSalary * employee[num].Tax;
- }
- double calculateDeductions() {
-	 return  employee[num].deduction;
-
- }
- double calculateNetSalary() {
-	 double overtime = calculateovertime();
-	 double bonus = calculatebonus();
-	 double deductions = calculateDeductions();
-	 double tax = calculatetaxes();
-	 double net = employee[num].BasicSalary + overtime + bonus - deductions - tax;
-	 return net;
- }
- void salary() {
-
-	 num = check();
-
-	 int choice1;
-	 do {
-		 cout << "\n Basic salary of " << employee[num].emp_name << "'s : " << employee[num].BasicSalary; 
-
-
-		 cout << "\n=============================================================";
-
-		 cout << "\n--- Update Menu ---\n";
-		 cout << "[1]. Update Overtime Hours\n";
-		 cout << "[2]. Update Overtime Rate\n";
-		 cout << "[3]. Update Performance Score\n";
-		 cout << "[4]. Update Deduction\n";
-		 cout << "[5]. Update Taxes\n";
-		 cout << "[6]. Exit Update\n\n";
-		 cout << "Enter your choice: \n";
-		 cin >> choice1;
-
-		 if (cin.fail()) {
-			 cout << "\n\n\  ***Error: Invalid input!*** \n\n";
-			 cin.clear();
-			 cin.ignore(1000, '\n');
-			 continue;
-		 }
-		 
-		 switch (choice1) {
-		 case 1:
-			 cout << "Enter new Overtime Hours: ";
-			 cin >> employee[num].overtimehours;
-			 break;
-
-		 case 2:
-			 cout << "Enter new Overtime Rate: ";
-			 cin >> employee[num].overtimerate;
-			 break;
-
-		 case 3:
-			 cout << "Enter new Performance Score: ";
-			 cin >> employee[num].performancescore;
-			 break;
-
-		 case 4:
-			 cout << "Enter new Deduction: ";
-			 cin >> employee[num].deduction;
-			 break;
-
-		 case 5:
-			 cout << "Enter new rate Taxes: ";
-			 cin >> employee[num].Tax;
-			 break;
-
-		 case 6:
-
-			 
-			 cout << "Employee updated successfully!\n";
-			 employee[num].NetSalary = calculateNetSalary();
-			 cout << "======================================================";
-			 cout << "\n Net salary of " << employee[num].emp_name << "'s : " << employee[num].NetSalary;
-
-			 
-			 return;
-			 break;
-
-		 default:
-			 cout << "Invalid choice!\n";
-
-		 }
-		 if (choice1 == 6)
-			 break;
-	 } while (true);
-
-
-	
-
- }
  int soperation() {
 	 do
 	 {
 		 data1();
 		 cout << "\n *** Select the next operation *** \n\n";
 		 cout << " [1] Add :\n\n" << " [2] Update :\n\n" << " [3] delete :\n\n";
-		 cout << " [4] salary :\n\n"<< " [5] attendance :\n\n" << " [6] logout :\n\n";
+		 cout << " [4] logout :\n\n";
 		 cin >> num;
 		 if (cin.fail()) {
 			 cout << "\n\n\  ***Error: Invalid input!*** " << endl;
@@ -499,19 +381,11 @@ void login(){
 			 delete1();
 			 break;
 		 case 4:
-			 salary();
-			 break;
-		 case 5:
-			 
-			 break;
-		 case 6:
-			 cout << "\n ***Exiting*** \n";
-			 login();
 			 break;
 		 default:
 			 cout << "\n\n\  ***Error: Invalid input!*** " << endl;
 		 }
-		 if (num == 6)
+		 if (num == 4)
 		 {
 			 break;
 		 }
@@ -526,19 +400,16 @@ int main()
 	employee[0].emp_pass = "6325bh";
 	employee[0].emp_Position = "unemployed";
 	employee[0].emp_phone = "01144008977";
-	employee[0].BasicSalary = 15000;
-
 	employee[1].emp_name = "Youssef wael";
 	employee[1].emp_id = "12569";
 	employee[1].emp_pass = "hao12#";
 	employee[1].emp_Position = "unemployed";
 	employee[1].emp_phone = "01015484390";
 	employee[1].emp_age = 18;
-	employee[1].BasicSalary = 10000;
 
 	admin[0].admin_id = "2601";
 	admin[0].admin_pass = "2025";
-	admin[0].admin_name = "Mostafa Ahmed";  
+	admin[0].admin_name = "Youssef Ebrahim";  
 
 
 	login();
