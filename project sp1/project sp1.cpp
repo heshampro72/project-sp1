@@ -21,13 +21,13 @@ struct employees
 	int emp_age;
 	string emp_phone;
 	double BasicSalary;
-	double Bonus;
+	double Bonus = 0;
 
 	double Tax;
 	double Taxrate;
 	double NetSalary;
 	string emp_name;
-	string emp_Position;
+	string emp_Position;;
 	float performancescore;
 	double overtimehours;
 	double overtimerate;
@@ -137,7 +137,7 @@ void login() {
 		cout << " ================================================================" << endl;
 		cout << "|                            Log in                               |" << endl;
 		cout << " ================================================================ " << endl;
-		cout << "[1]- Employee\n[2]- Employer\n[3]- exit " << endl;
+		cout << "[1]- Employee\n\n[2]- Employer\n\n[3]- exit " << endl;
 		cout << "----------------------------------------------------------------" << endl;
 
 		cout << "Enter your choice: ";
@@ -300,12 +300,12 @@ void option() {
 
 		int option;
 
-		cout << "\n****** MENU ******\n";
-		cout << "1. Employee Information\n";
-		cout << "2. Salary Details\n";
-		cout << "3. Attendance\n";
-		cout << "4. Exit\n";
-		cout << "Your choice: ";
+		cout << "\n****** MENU ******\n\n";
+		cout << "[1]. Employee Information\n\n";
+		cout << "[2]. Salary Details\n\n";
+		cout << "[3]. Attendance\n\n";
+		cout << "[4]. Exit\n\n";
+		cout << " Your choice: ";
 		cin >> option;
 
 		switch (option) {
@@ -360,9 +360,9 @@ void data1() { // جدول البيانات
 	}
 	cout << "+-------------------------+---------------+----------------------+------------------------------+----------------+\n";
 }
-int check() { //تاكيد ID
+void check(int& count ) { //تاكيد ID
 	string id;
-	int count = -1;
+	count = -1;
 	do
 	{
 		cout << " Enter the employee ID :";
@@ -386,7 +386,52 @@ int check() { //تاكيد ID
 		else
 			break;
 	} while (true);
-	return count;
+	
+}
+void addEmployee() {
+	int index = -1;
+
+
+	for (int i = 0; i < count1; i++) {
+		if (employee[i].emp_id == "") {
+			index = i;
+			break;
+		}
+	}
+
+	if (index == -1) {
+		cout << "\n*** No space to add new employee ***\n";
+		return;
+	}
+
+	cout << "\n--- Add New Employee ---\n";
+
+	cout << "Enter Name: ";
+	cin.ignore();
+	getline(cin, employee[index].emp_name);
+
+	cout << "Enter ID (5 digits): ";
+	cin >> employee[index].emp_id;
+
+	cout << "Enter Password (6 chars): ";
+	cin >> employee[index].emp_pass;
+
+	cout << "Enter Age: ";
+	cin >> employee[index].emp_age;
+
+	cout << "Enter Phone: ";
+	cin >> employee[index].emp_phone;
+
+	cout << "Enter Position: ";
+	cin.ignore();
+	getline(cin, employee[index].emp_Position);
+
+	cout << "Enter Basic Salary: ";
+	cin >> employee[index].BasicSalary;
+
+
+	cout << "\n*** Employee added successfully ***\n\n";
+	saveToFile();
 }
 void updateid() {
 	do {
@@ -464,7 +509,8 @@ int supdate() {
 	return num;
 }
 void update() { // تجديد البيانات
-	count2 = check();
+	 
+	check(count2);
 
 	do
 	{
@@ -492,7 +538,8 @@ void update() { // تجديد البيانات
 	} while (true);
 }
 void delete1() {//حذف موظف
-	count2 = check();
+	
+	check(count2);
 	employee[count2] = {};
 	cout << "\n*** account has been successfully deleted ***\n\n";
 }
@@ -534,22 +581,25 @@ double calculateNetSalary() {
 }
 void salary() {
 
-	num = check();
-
+	
+	check(num);
+	count2 = num;
 	int choice1;
 	do {
-		cout << "\n Basic salary of " << employee[num].emp_name << "'s : " << employee[num].BasicSalary;
-
+		employee[num].NetSalary = calculateNetSalary();
+		cout << "          \n                                   [" << employee[num].emp_name << "'s salary details]\n";
+		displaySalaryDetails();
 
 		cout << "\n=============================================================";
 
-		cout << "\n--- Update Menu ---\n";
-		cout << "[1]. Update Overtime Hours\n";
-		cout << "[2]. Update Overtime Rate\n";
-		cout << "[3]. Update Performance Score\n";
-		cout << "[4]. Update Deduction\n";
-		cout << "[5]. Update Taxes rate\n";
-		cout << "[6]. Exit Update\n\n";
+		cout << "\n --- Update Menu ---\n\n";
+		cout << "[1]. Update Basic Salary \n\n";
+		cout << "[2]. Update Overtime Hours\n\n";
+		cout << "[3]. Update Overtime Rate\n\n";
+		cout << "[4]. Update Performance Score\n\n";
+		cout << "[5]. Update Deduction\n\n";
+		cout << "[6]. Update Taxes rate\n\n";
+		cout << "[7]. Exit Update\n\n";
 		cout << "Enter your choice: \n";
 		cin >> choice1;
 
@@ -562,35 +612,38 @@ void salary() {
 
 		switch (choice1) {
 		case 1:
+			cout << "Enter new Basic Salary : ";
+			cin >> employee[num].BasicSalary;
+			break;
+		case 2:
 			cout << "Enter new Overtime Hours: ";
 			cin >> employee[num].overtimehours;
 			break;
 
-		case 2:
+		case 3:
 			cout << "Enter new Overtime Rate: ";
 			cin >> employee[num].overtimerate;
 			break;
 
-		case 3:
+		case 4:
 			cout << "Enter new Performance Score: ";
 			cin >> employee[num].performancescore;
 			break;
 
-		case 4:
+		case 5:
 			cout << "Enter new Deduction: ";
 			cin >> employee[num].deduction;
 			break;
 
-		case 5:
+		case 6:
 			cout << "Enter new rate Taxes: ";
 			cin >> employee[num].Taxrate;
 			break;
 
-		case 6:
+		case 7:
 
 
 			cout << "Employee updated successfully!\n";
-			employee[num].NetSalary = calculateNetSalary();
 			cout << "======================================================";
 			cout << "\n Net salary of " << employee[num].emp_name << "'s : " << employee[num].NetSalary;
 
@@ -602,14 +655,12 @@ void salary() {
 			cout << "Invalid choice!\n";
 
 		}
-		if (choice1 == 6)
+		if (choice1 == 7)
 			break;
 	} while (true);
 
-
-
-
 }
+
 int soperation() {
 	do
 	{
@@ -637,6 +688,7 @@ void enter() {//الدخول
 		switch (num) {
 
 		case 1:
+			addEmployee();
 			break;
 		case 2:
 
